@@ -57,9 +57,9 @@ pub fn create_window(title string, x int, y int, resizable bool, context Context
 pub fn (win Window) should_close() bool {
 	mut should_close := false
 	for {
-		evt := sdl.Event{}
-		for 0 < sdl.poll_event(&evt) {
-			match evt.@type {
+		event := sdl.Event{}
+		for 0 < sdl.poll_event(&event) {
+			match event.@type {
 				.quit { should_close = true }
 				else {}
 			}
@@ -82,6 +82,10 @@ pub fn (mut win Window) close() {
     sdl.quit()
 }
 
-fn cleanup() {
-	
+pub fn (win &Window) set_fullscreen(enebled bool) {
+	sdl.set_window_fullscreen(win.instance, u32(enebled))
+}
+
+pub fn (win &Window) set_cursor_appearance(appearance sdl.SystemCursor) {
+	sdl.create_system_cursor(appearance)
 }

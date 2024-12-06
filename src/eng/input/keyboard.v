@@ -124,11 +124,11 @@ pub enum Key {
 pub fn get_pressed_keys() []Key {
     mut pressed_keys := []Key{}
     numkeys := 0
-    kb_state := sdl.get_keyboard_state(&numkeys)
+    keyboard_state := sdl.get_keyboard_state(&numkeys)
 
     for scancode in 0 .. numkeys {
         unsafe { 
-			if kb_state[scancode] != 0  {
+			if keyboard_state[scancode] != 0  {
             	if key := Key.from(scancode) {
                 	pressed_keys << key
 	            }
@@ -140,38 +140,6 @@ pub fn get_pressed_keys() []Key {
 
     if pressed_keys.len < 1 {
         return [.none]
-    }
-
-    return pressed_keys
-}
-
-fn get_pressed_mouse_buttons() []Key {
-    mut pressed_buttons := []int{}
-
-    mut x := 0
-    mut y := 0
-
-    mouse_state := sdl.get_mouse_state(&x, &y)
-
-    for button in 1 .. 6 {
-        if mouse_state & sdl.button(button) != 0 {
-            pressed_buttons << button
-        }
-    }
-
-    mut pressed_keys := []Key{}
-
-    for button in pressed_buttons {
-        pressed_keys << match button {
-            1 { .mouse_left }
-            2 { .mouse_middle }
-            3 { .mouse_right }
-            4 { .mouse_back }
-            5 { .mouse_forward }
-            else {
-                .none
-            }
-        }
     }
 
     return pressed_keys
