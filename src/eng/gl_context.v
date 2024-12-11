@@ -1,7 +1,6 @@
 module eng
 
 import sdl
-//import sdl.vulkan as vk
 
 pub enum ContextType {
 	non
@@ -22,14 +21,6 @@ pub fn create_gl_context(window &Window, version f32) GlContext {
 	if instance == unsafe { nil } {
 		println('When creating a OpenGl context you need todo "Context.opengl" in window creation!')
 		eprint("OpenGL context could not be created! SDL_Error: ${sdl.get_error()}")
-		sdl.destroy_window(window.instance)
-		sdl.quit()
-		exit(1)
-	}
-
-	if C.glewInit() != C.GLEW_OK {
-		eprint("GLEW could not be initialized!")
-		sdl.gl_delete_context(instance)
 		sdl.destroy_window(window.instance)
 		sdl.quit()
 		exit(1)

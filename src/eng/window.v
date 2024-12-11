@@ -2,12 +2,6 @@ module eng
 
 import sdl
 
-#include <GL/glew.h>
-
-#flag -lGLEW -lGL -lGLU
-
-fn C.glewInit() int
-
 @[noinit]
 pub struct Window {
 	context_type ContextType @[required]
