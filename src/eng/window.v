@@ -4,10 +4,10 @@ import sdl
 
 @[noinit]
 pub struct Window {
-	context_type ContextType @[required]
+	context_type ContextType
 
 	pub:
-	instance &sdl.Window @[required]
+	instance &sdl.Window
 
 	title string
 	x int

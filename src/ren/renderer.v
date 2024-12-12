@@ -11,14 +11,15 @@ pub fn (ren Renderer) init() {
 	}
 
 	send_gl_data()
+
 	install_shaders()
+
+	gl.enable(0x92E0)
 }
 
 pub fn (ren Renderer) draw() {
 	gl.viewport(0, 0, 800, 800)
-	if gl.get_error() != 0 {
-		println(gl.get_error())
-	}
+
 	gl.clear(gl.color_buffer_bit | gl.depth_buffer_bit | gl.stencil_buffer_bit)
 
 	gl.draw_array(gl.triangles, 0, 6)
@@ -47,9 +48,9 @@ fn send_gl_data() {
 	gl.bind_buffer(gl.array_buffer, verts_buffer_id)
 	gl.buffer_data(gl.array_buffer, sizeof(verts), verts, gl.static_draw)
 	gl.enable_vertex_attrib_array(0)
-	gl.vertex_attrib_pointer(0, 2, gl.Type.float.to_gl(), false, int(sizeof(f32)) * 5, 0)
+	C.glVertexAttribPointer(0, 2, gl.Type.float.to_gl(), 0, int(sizeof(f32)) * 5, 0)
 	gl.enable_vertex_attrib_array(1)
-	gl.vertex_attrib_pointer(1, 3, gl.Type.float.to_gl(), false, int(sizeof(f32)) * 5, int(sizeof(f32)) * 2)
+	C.glVertexAttribPointer(1, 3, gl.Type.float.to_gl(), 0, int(sizeof(f32)) * 5, int(sizeof(f32)) * 2)
 
 	indices := [
 		u16(0), 

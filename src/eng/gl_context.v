@@ -17,6 +17,10 @@ pub struct GlContext {
 }
 
 pub fn create_gl_context(window &Window, version f32) GlContext {
+	sdl.gl_set_attribute(sdl.GLattr.context_major_version, int(version.str().split('.')[0].int()))
+	sdl.gl_set_attribute(sdl.GLattr.context_minor_version, int(version.str().split('.')[1].int()))
+    sdl.gl_set_attribute(sdl.GLattr.context_profile_mask, 1)
+
 	instance := sdl.gl_create_context(window.instance)
 	if instance == unsafe { nil } {
 		println('When creating a OpenGl context you need todo "Context.opengl" in window creation!')
@@ -25,10 +29,6 @@ pub fn create_gl_context(window &Window, version f32) GlContext {
 		sdl.quit()
 		exit(1)
 	}
-
-	sdl.gl_set_attribute(sdl.GLattr.context_major_version, int(version))
-	sdl.gl_set_attribute(sdl.GLattr.context_major_version, int((version - int(version)) * 10))
-    sdl.gl_set_attribute(sdl.GLattr.context_profile_mask, 1)
 
 	return GlContext{
 		instance: &instance

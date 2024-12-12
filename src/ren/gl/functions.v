@@ -31,6 +31,12 @@ pub fn clear_color(r f32, g f32, b f32, a f32) {
 	C.glClearColor(r, g, b, a)
 }
 
+fn C.glEnable(cap u32)
+
+pub fn enable(cap u32) {
+    C.glEnable(cap)
+}
+
 // Buffer
 fn C.glGenBuffers(n u32, buffers &u32)
 
@@ -57,14 +63,14 @@ pub fn enable_vertex_attrib_array(index u32) {
     C.glEnableVertexAttribArray(index)
 }
 
-// Function signature in C
 fn C.glVertexAttribPointer(index u32, size int, typ u32, normalized u8, stride int, pointer voidptr)
 
-// V function binding
-pub fn vertex_attrib_pointer(index u32, size int, typ u32, normalized bool, stride int, pointer int) {
-    C.glVertexAttribPointer(index, size, typ, u8(normalized), stride, unsafe { voidptr(&pointer) })
-}
+pub fn vertex_attrib_pointer(index u32, size int, typ u32, normalized bool, stride int, pointer voidptr) {
+    println('Tip dont use this function, use C.glVertexAttribPointer instead because this only makes erro (1282) invalid operation')
+    C.glVertexAttribPointer(index, size, typ, u8(normalized), stride, pointer)
 
+    check_error('vertex atrib pointer', @FILE_LINE)
+}
 
 // Draw
 fn C.glDrawArrays(mode u32, first int, count int)
